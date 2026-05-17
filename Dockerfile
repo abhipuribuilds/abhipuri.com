@@ -1,5 +1,5 @@
 # Shared dependency layer. Docker installs dependencies here, not on the host.
-FROM node:22-alpine AS deps
+FROM node:22-slim AS deps
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 # Local development target. Source code is bind-mounted by docker-compose.
-FROM node:22-alpine AS development
+FROM node:22-slim AS development
 
 WORKDIR /app
 ENV NODE_ENV=development
@@ -20,7 +20,7 @@ EXPOSE 5173
 CMD ["npm", "run", "dev"]
 
 # Build target for production assets.
-FROM node:22-alpine AS build
+FROM node:22-slim AS build
 
 WORKDIR /app
 
